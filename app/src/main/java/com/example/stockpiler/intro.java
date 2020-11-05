@@ -19,8 +19,13 @@ public class intro extends AppCompatActivity {
             public void run() {
                 startActivity(intent);
             }
-        },2000);
+        },1500);
 
+    }
+
+    // Back button code
+    public void onBackPressed() {
+        android.os.Process.killProcess(android.os.Process.myPid());
     }
 
 }
