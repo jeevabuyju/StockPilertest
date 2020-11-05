@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">StockPiler</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="login">LOGIN</string>
+    <string name="password">PASSWORD</string>
+    <string name="username">USERNAME</string>
+</resources>
