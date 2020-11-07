@@ -24,7 +24,7 @@ public class login extends AppCompatActivity {
         // initialize ViewByID
         final EditText username = findViewById(R.id.username);
         final EditText password = findViewById(R.id.password);
-        Button login = findViewById(R.id.login);
+        final Button login = findViewById(R.id.login);
 
         // login onClick
         login.setOnClickListener(new View.OnClickListener() {
@@ -35,41 +35,44 @@ public class login extends AppCompatActivity {
                 if (username.getText().toString().trim().length() == 0) {
                     Toast.makeText(login.this, "Access Denied, Please Enter Username", Toast.LENGTH_SHORT).show();
                     return;
-                }
-                else if (password.getText().toString().trim().length() == 0){
+                } else if (password.getText().toString().trim().length() == 0) {
                     Toast.makeText(login.this, "Access Denied, Please Enter Password", Toast.LENGTH_SHORT).show();
                     return;
-                }
+                } else {
 
-                else {
-                    if ((username.getText().toString().trim().equals("admin")) && (password.getText().toString().trim().equals("admin"))) {
-                        Toast.makeText(login.this, "Access Granted, Welcome " + username.getText().toString().trim().toUpperCase() + " !!!", Toast.LENGTH_SHORT).show();
-                    } else {
-                        clear();
-                        Toast.makeText(login.this, "Invalid Username And Password", Toast.LENGTH_SHORT).show();
-                        return;
+                  // if check credentials
+//                    if ((username.getText().toString().trim().equals("admin")) && (password.getText().toString().trim().equals("admin"))) {
+//                        Toast.makeText(login.this, "Access Granted, Welcome " + username.getText().toString().trim().toUpperCase() + " !!!", Toast.LENGTH_SHORT).show();
+//                    } else {
+//                        clear();
+//                        Toast.makeText(login.this, "Invalid Username And Password", Toast.LENGTH_SHORT).show();
+//                        return;
+//                    }
+
+                    try {
+                        final SQLiteDatabase db = openOrCreateDatabase("stockpilerDB", Context.MODE_PRIVATE, null);
+                        Cursor c = db.rawQuery("SELECT * FROM user WHERE username='" + username.getText() + "' AND password='" + password.getText() + "';", null);
+                        if (c.moveToFirst()) {
+                            Toast.makeText(login.this, "Access Granted, Welcome " + username.getText().toString().trim().toUpperCase() + " !!!", Toast.LENGTH_SHORT).show();
+                            final Intent intent = new Intent(getApplicationContext(), home.class);
+                            startActivity(intent);
+                            c.close();
+                        } else {
+                            Toast.makeText(login.this, "Access Denied, Invalid Username And Password", Toast.LENGTH_SHORT).show();
+                        }
+                    } catch (Exception e) {
+                        Toast.makeText(login.this, e.toString(), Toast.LENGTH_LONG).show();
                     }
                 }
-
-                // DB check (to be integrated later)
-//                final SQLiteDatabase db = openOrCreateDatabase("user", Context.MODE_PRIVATE,null);
-//                Cursor c = db.rawQuery("SELECT * FROM user WHERE username='" + username.getText() + "' AND password='" + password.getText() + "';", null);
-//                if(c.moveToFirst()){
-//                    final Intent intent=new Intent(this,home.class);
-//                    startActivity(intent);
-//                    c.close();
-//                } else{
-//                    Toast.makeText(login.this, "Access Denied, Invalid Username And Password", Toast.LENGTH_SHORT).show();
-//                }
-
             }
         });
 
     }
 
 
-// Back button code
+    // Back button code
     boolean doubleBackToExitPressedOnce = false;
+
     @Override
     public void onBackPressed() {
         if (doubleBackToExitPressedOnce) {
@@ -77,18 +80,18 @@ public class login extends AppCompatActivity {
         }
 
         this.doubleBackToExitPressedOnce = true;
-        Toast.makeText(login.this, "Please click BACK again to exit", Toast.LENGTH_SHORT).show();
+        Toast.makeText(login.this, "Please click BACK again to Exit", Toast.LENGTH_SHORT).show();
 
         new Handler().postDelayed(new Runnable() {
 
             @Override
             public void run() {
-                doubleBackToExitPressedOnce=false;
+                doubleBackToExitPressedOnce = false;
             }
         }, 2000);
     }
 
-    public void clear(){
+    public void clear() {
         ((EditText) findViewById(R.id.username)).setText("");
         ((EditText) findViewById(R.id.password)).setText("");
     }
