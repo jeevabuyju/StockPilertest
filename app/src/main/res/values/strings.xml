@@ -13,4 +13,29 @@
     <string name="sales">Sales</string>
     <string name="logout">LOGOUT</string>
     <string name="logo">logo</string>
+    <string name="description">DESCRIPTION</string>
+    <string name="qty">QTY</string>
+    <string name="category">CATEGORY</string>
+    <string name="itemName">ITEM NAME</string>
+    <string name="id">PRODUCT ID</string>
+    <string name="costprice">COST PRICE</string>
+    <string name="sellingprice">SELLING PRICE</string>
+    <string name="clear">CLEAR</string>
+    <string name="add">ADD</string>
+    <string name="addqty">+</string>
+    <string name="subqty">-</string>
+
+    <string-array name="categories">
+        <item>--select category--</item>
+        <item>Fruit &amp; Vegetables</item>
+        <item>Grains &amp; Pulses</item>
+        <item>Spices &amp; Condiments</item>
+        <item>Bakery</item>
+        <item>Cosmetics</item>
+        <item>Stationary</item>
+        <item>Electronics</item>
+        <item>HouseHold</item>
+        <item>Others</item>
+    </string-array>
+
 </resources>

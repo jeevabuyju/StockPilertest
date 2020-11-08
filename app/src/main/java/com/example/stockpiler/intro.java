@@ -1,4 +1,5 @@
-package com.example.stockpiler;
+package com.
+        example.stockpiler;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -19,6 +20,7 @@ public class intro extends AppCompatActivity {
         // create DB and table
         final SQLiteDatabase db = openOrCreateDatabase("stockpilerDB", Context.MODE_PRIVATE,null);
         db.execSQL("CREATE TABLE IF NOT EXISTS user(username VARCHAR UNIQUE,password VARCHAR);");
+        db.execSQL("CREATE TABLE IF NOT EXISTS inventory(id VARCHAR UNIQUE NOT NULL PRIMARY KEY, itemname VARCHAR NOT NULL, category VARCHAR , description VARCHAR, quantity INTEGER, costprice DECIMAL(6,2) NOT NULL, sellingprice DECIMAL(6,2) NOT NULL);");
         try {
             db.execSQL("INSERT INTO user VALUES('admin','admin');");
         }

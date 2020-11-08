@@ -27,6 +27,14 @@ public class home extends AppCompatActivity {
         final Button alert = findViewById(R.id.alert);
         final Button logout = findViewById(R.id.logout);
 
+        purchase.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Intent intent=new Intent(getApplicationContext(),purchase.class);
+                startActivity(intent);
+            }
+        });
+
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
