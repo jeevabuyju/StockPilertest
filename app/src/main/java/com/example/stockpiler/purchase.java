@@ -53,9 +53,8 @@ public class purchase extends AppCompatActivity implements AdapterView.OnItemSel
                     if (id.getText().toString().trim().length() == 0) {
                         return;
                     }
-                    Cursor c = db.rawQuery("SELECT * FROM inventory WHERE id='" + id.getText() + "';", null);
+                    Cursor c = db.rawQuery("SELECT * FROM inventory WHERE id='" + id.getText().toString().toUpperCase() + "';", null);
                     if (c.moveToFirst()) {
-                        id.setText(c.getString(0));
                         itemname.setText(c.getString(1));
                         category.setText(c.getString(2));
                         description.setText(c.getString(3));
@@ -63,7 +62,6 @@ public class purchase extends AppCompatActivity implements AdapterView.OnItemSel
                         sellingprice.setText(c.getString(6));
                         c.close();
                     }
-                    Toast.makeText(purchase.this,"Partial success",Toast.LENGTH_LONG).show();
                 }
                 catch (Exception e){
                     Toast.makeText(purchase.this,e.toString(),Toast.LENGTH_LONG).show();
@@ -76,9 +74,32 @@ public class purchase extends AppCompatActivity implements AdapterView.OnItemSel
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
-                Toast.makeText(purchase.this,"Partial success",Toast.LENGTH_LONG).show();
+                try {
+                    final SQLiteDatabase db = openOrCreateDatabase("stockpilerDB", Context.MODE_PRIVATE, null);
+                    // validation
+                    if (id.getText().toString().trim().length()==0 || itemname.getText().toString().trim().length()==0 || category.getText().toString().trim().length()==0 || quantity.getText().toString().trim().length()==0 || costprice.getText().toString().trim().length()==0 || sellingprice.getText().toString().trim().length()==0) {
+                        Toast.makeText(purchase.this,"ERROR, Please Enter the Values",Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    // check item in DB, if true UPDATE else INSERT
+                    Cursor c = db.rawQuery("SELECT * FROM inventory WHERE id='" + id.getText().toString().toUpperCase() + "';", null);
+                    if (c.moveToFirst()) {
+                        int prevqty = Integer.parseInt(c.getString(4));
+                        int newqty = prevqty+Integer.parseInt(quantity.getText().toString());
+                        db.execSQL("UPDATE inventory SET quantity ="+newqty+",costprice ="+costprice.getText()+",sellingprice ="+sellingprice.getText()+" WHERE id ='"+id.getText().toString().toUpperCase()+"';");
+                        Toast.makeText(purchase.this,"UPDATED Product Details",Toast.LENGTH_SHORT).show();
+                        clear();
+                        c.close();
+                    }
+                    else{
+                        db.execSQL("INSERT INTO inventory VALUES('"+id.getText().toString().toUpperCase()+"','"+itemname.getText()+"','"+category.getText()+"','"+description.getText()+"',"+quantity.getText()+","+costprice.getText()+","+sellingprice.getText()+");");
+                        Toast.makeText(purchase.this,"Product Item ADDED",Toast.LENGTH_SHORT).show();
+                        clear();
+                    }
+                }
+                catch (Exception e){
+                    Toast.makeText(purchase.this,e.toString(),Toast.LENGTH_LONG).show();
+                }
 
             }
         });
@@ -145,6 +166,16 @@ public class purchase extends AppCompatActivity implements AdapterView.OnItemSel
             }
         });
 
+    }
+    // Clear code
+    public void clear(){
+        ((EditText) findViewById(R.id.slugid)).setText("");
+        ((EditText) findViewById(R.id.itemName)).setText("");
+        ((EditText) findViewById(R.id.category)).setText("");
+        ((EditText) findViewById(R.id.description)).setText("");
+        ((EditText) findViewById(R.id.quantity)).setText("");
+        ((EditText) findViewById(R.id.costprice)).setText("");
+        ((EditText) findViewById(R.id.sellingprice)).setText("");
     }
 
 
