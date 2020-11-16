@@ -9,6 +9,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -120,18 +121,41 @@ public class sales extends AppCompatActivity {
             @SuppressLint("SetTextI18n")
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-                // Check id in DB
                 try {
+
+                    // quantity check in db for productId
+                    final SQLiteDatabase db = openOrCreateDatabase("stockpilerDB", Context.MODE_PRIVATE, null);
+                    Cursor c = db.rawQuery("SELECT * FROM inventory WHERE id='" + id.getText().toString().toUpperCase() + "';", null);
+                    if (c.moveToFirst()) {
+                        int qty = Integer.parseInt(c.getString(4));
+                        if(qty<Integer.parseInt(quantity.getText().toString()) && Integer.parseInt(quantity.getText().toString())==1){
+                            Toast.makeText(sales.this, "Out of Stock,Product Unavailable.", Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+                        else if(qty<Integer.parseInt(quantity.getText().toString())) {
+                            Toast.makeText(sales.this, "Out of Stock,Reduce Quantity.", Toast.LENGTH_SHORT).show();
+                            c.close();
+                        }
+                    }
+                    else{
+                        Toast.makeText(sales.this,"Product Unavailable",Toast.LENGTH_SHORT).show();
+                        clear();
+                        return;
+                    }
+
+                    // validation & update amount
                     if (Integer.parseInt(quantity.getText().toString().trim())==0) {
+                        totalamt.setText("");
                         Toast.makeText(sales.this,"Minimum Quantity is 1",Toast.LENGTH_SHORT).show();
                         return;
                     }
                     double total = (Double.parseDouble(sellingprice.getText().toString())) * (Double.parseDouble(quantity.getText().toString()));
                     totalamt.setText(Double.toString(total));
-                    }
-                catch (NumberFormatException e){
-                    return;
+                }
+
+                catch (NumberFormatException ignored){
+                    totalamt.setText("");
+                    // Toast.makeText(sales.this,"Minimum Quantity is 1",Toast.LENGTH_SHORT).show();
                 }
                 catch (Exception e){
                     Toast.makeText(sales.this,e.toString(),Toast.LENGTH_LONG).show();
@@ -139,18 +163,81 @@ public class sales extends AppCompatActivity {
             }
         });
 
+
+        addbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    final SQLiteDatabase db = openOrCreateDatabase("stockpilerDB", Context.MODE_PRIVATE, null);
+                    // validation
+                    if (id.getText().toString().trim().length()==0) {
+                        Toast.makeText(sales.this,"ERROR, Please Enter the ProductId",Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    else if (Integer.parseInt(quantity.getText().toString().trim())==0) {
+                        Toast.makeText(sales.this,"Minimum Quantity is 1",Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+
+                    // check item in DB, if true UPDATE else INSERT
+                    Cursor c = db.rawQuery("SELECT * FROM inventory WHERE id='" + id.getText().toString().toUpperCase() + "';", null);
+                    if (c.moveToFirst()) {
+                        int prevqty = Integer.parseInt(c.getString(4));
+                        if(prevqty>=Integer.parseInt(quantity.getText().toString())) {
+                            int newqty = prevqty - Integer.parseInt(quantity.getText().toString());
+                            db.execSQL("UPDATE inventory SET quantity ='" + newqty + "' WHERE id ='" + id.getText().toString().toUpperCase() + "';");
+                            db.execSQL("INSERT INTO cart VALUES('" + id.getText().toString().toUpperCase() + "','" + itemname.getText() + "'," + quantity.getText() + "," + sellingprice.getText() + "," + totalamt.getText() + ");");
+                            Toast.makeText(sales.this, "Product ADDED to Cart", Toast.LENGTH_SHORT).show();
+                            clear();
+                            c.close();
+                        }
+                        else if(prevqty<Integer.parseInt(quantity.getText().toString()) && Integer.parseInt(quantity.getText().toString())==1){
+                            Toast.makeText(sales.this, "Out of Stock,Product Unavailable.", Toast.LENGTH_SHORT).show();
+                        }
+                        else{
+                            Toast.makeText(sales.this, "Out of Stock,Reduce Quantity.", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                    else{
+                        Toast.makeText(sales.this,"Product Unavailable",Toast.LENGTH_SHORT).show();
+                        clear();
+                    }
+                }
+                catch (NumberFormatException ignored){
+                    Toast.makeText(sales.this,"Minimum Quantity is 1",Toast.LENGTH_SHORT).show();
+                }
+                catch (Exception e){
+                    Toast.makeText(sales.this,e.toString(),Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+
+
         // Clear code
         clear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                id.setText("");
                 itemname.setText("");
                 sellingprice.setText("");
                 quantity.setText("");
                 totalamt.setText("");
                 findViewById(R.id.details).setVisibility(View.INVISIBLE);
+                id.setText("");
             }
         });
 
+
     }
+
+
+    // Clear code
+    public void clear(){
+        ((TextView)findViewById(R.id.itemName)).setText("");
+        ((EditText) findViewById(R.id.quantity)).setText("");
+        ((TextView) findViewById(R.id.sellingprice)).setText("");
+        findViewById(R.id.details).setVisibility(View.INVISIBLE);
+        ((EditText) findViewById(R.id.id)).setText("");
+    }
+
+
 }

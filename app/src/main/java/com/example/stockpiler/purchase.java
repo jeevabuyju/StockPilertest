@@ -2,6 +2,7 @@ package com.example.stockpiler;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -81,6 +82,10 @@ public class purchase extends AppCompatActivity implements AdapterView.OnItemSel
                         Toast.makeText(purchase.this,"ERROR, Please Enter the Values",Toast.LENGTH_SHORT).show();
                         return;
                     }
+                    else if (Integer.parseInt(quantity.getText().toString().trim())==0){
+                        Toast.makeText(purchase.this,"Minimum Quantity is 1",Toast.LENGTH_SHORT).show();
+                        return;
+                    }
                     // check item in DB, if true UPDATE else INSERT
                     Cursor c = db.rawQuery("SELECT * FROM inventory WHERE id='" + id.getText().toString().toUpperCase() + "';", null);
                     if (c.moveToFirst()) {
@@ -147,6 +152,29 @@ public class purchase extends AppCompatActivity implements AdapterView.OnItemSel
                     }
                 } catch (Exception e) {
                     Toast.makeText(purchase.this, e.toString(), Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+
+
+        quantity.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            @Override
+            public void afterTextChanged(Editable s) {}
+            @SuppressLint("SetTextI18n")
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                try {
+                    if (Integer.parseInt(quantity.getText().toString().trim())==0) {
+                        Toast.makeText(purchase.this, "Minimum Quantity is 1", Toast.LENGTH_SHORT).show();
+                    }
+                }
+                catch (NumberFormatException ignored){
+                     Toast.makeText(purchase.this,"Minimum Quantity is 1",Toast.LENGTH_SHORT).show();
+                }
+                catch (Exception e){
+                    Toast.makeText(purchase.this,e.toString(),Toast.LENGTH_LONG).show();
                 }
             }
         });

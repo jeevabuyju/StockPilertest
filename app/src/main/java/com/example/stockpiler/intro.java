@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.database.sqlite.SQLiteConstraintException;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.os.Handler;
@@ -21,9 +22,11 @@ public class intro extends AppCompatActivity {
         final SQLiteDatabase db = openOrCreateDatabase("stockpilerDB", Context.MODE_PRIVATE,null);
         db.execSQL("CREATE TABLE IF NOT EXISTS user(username VARCHAR UNIQUE,password VARCHAR);");
         db.execSQL("CREATE TABLE IF NOT EXISTS inventory(id VARCHAR UNIQUE NOT NULL PRIMARY KEY, itemname VARCHAR NOT NULL, category VARCHAR , description VARCHAR, quantity INTEGER, costprice DECIMAL(6,2) NOT NULL, sellingprice DECIMAL(6,2) NOT NULL);");
+        db.execSQL("CREATE TABLE IF NOT EXISTS cart(id VARCHAR, itemname VARCHAR NOT NULL, quantity INTEGER NOT NULL, sellingprice DECIMAL(6,2) NOT NULL, totalamt DECIMAL(6,2) NOT NULL);");
         try {
             db.execSQL("INSERT INTO user VALUES('admin','admin');");
         }
+        catch (SQLiteConstraintException ignored){}
         catch (Exception e){
              Toast.makeText(intro.this,e.toString(),Toast.LENGTH_LONG).show();
         }
