@@ -1,14 +1,13 @@
 package com.example.stockpiler;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public class home extends AppCompatActivity {
 
@@ -31,6 +30,14 @@ public class home extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 final Intent intent=new Intent(getApplicationContext(),purchase.class);
+                startActivity(intent);
+            }
+        });
+
+        sales.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Intent intent=new Intent(getApplicationContext(),sales.class);
                 startActivity(intent);
             }
         });

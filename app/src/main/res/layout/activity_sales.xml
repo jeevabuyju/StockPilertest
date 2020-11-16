@@ -19,4 +19,148 @@
         app:srcCompat="@drawable/logo"
         tools:ignore="ContentDescription" />
 
+    <AutoCompleteTextView
+        android:id="@+id/id"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:completionHint="@string/id"
+        android:completionThreshold="1"
+        android:hint="@string/id"
+        android:textColor="@color/white"
+        android:textColorHint="@color/textcolor"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView3" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/details"
+        android:layout_width="373dp"
+        android:layout_height="308dp"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/id">
+
+        <EditText
+            android:id="@+id/quantity"
+            android:layout_width="124dp"
+            android:layout_height="42dp"
+            android:layout_marginTop="15dp"
+            android:ems="10"
+            android:hint="@string/qty"
+            android:importantForAutofill="no"
+            android:inputType="number"
+            android:textColor="@color/white"
+            android:textColorHint="@color/textcolor"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/sellingprice" />
+
+        <Button
+            android:id="@+id/qtyadd"
+            android:layout_width="33dp"
+            android:layout_height="46dp"
+            android:layout_marginTop="10dp"
+            android:background="@android:color/transparent"
+            android:text="@string/addqty"
+            android:textColor="@color/colorAccent"
+            android:textSize="25sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/quantity"
+            app:layout_constraintTop_toBottomOf="@+id/sellingprice" />
+
+        <Button
+            android:id="@+id/qtysub"
+            android:layout_width="33dp"
+            android:layout_height="46dp"
+            android:layout_marginTop="10dp"
+            android:background="@android:color/transparent"
+            android:text="@string/subqty"
+            android:textColor="@color/colorAccent"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@+id/quantity"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/sellingprice" />
+
+        <TextView
+            android:id="@+id/itemName"
+            android:layout_width="300dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="15dp"
+            android:autofillHints="no"
+            android:ems="10"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:textColorHint="@color/textcolor"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/sellingprice"
+            android:layout_width="300dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="15dp"
+            android:autofillHints="no"
+            android:ems="10"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:textColorHint="@color/textcolor"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/itemName" />
+
+        <TextView
+            android:id="@+id/totalamt"
+            android:layout_width="300dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="15dp"
+            android:autofillHints="no"
+            android:ems="10"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:textColorHint="@color/textcolor"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/quantity" />
+
+        <Button
+            android:id="@+id/add"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:background="@color/bg_button"
+            android:text="@string/add"
+            android:textColor="@color/colorAccent"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.743"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/totalamt" />
+
+        <Button
+            android:id="@+id/clear"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:background="@color/bg_button"
+            android:text="@string/clear"
+            android:textColor="@color/colorAccent"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@+id/add"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/totalamt" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

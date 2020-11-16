@@ -51,7 +51,7 @@ public class login extends AppCompatActivity {
 
                     try {
                         final SQLiteDatabase db = openOrCreateDatabase("stockpilerDB", Context.MODE_PRIVATE, null);
-                        Cursor c = db.rawQuery("SELECT * FROM user WHERE username='" + username.getText() + "' AND password='" + password.getText() + "';", null);
+                        Cursor c = db.rawQuery("SELECT * FROM user WHERE username='" + username.getText().toString().trim() + "' AND password='" + password.getText() + "';", null);
                         if (c.moveToFirst()) {
                             Toast.makeText(login.this, "Access Granted, Welcome " + username.getText().toString().trim().toUpperCase() + " !!!", Toast.LENGTH_SHORT).show();
                             final Intent intent = new Intent(getApplicationContext(), home.class);

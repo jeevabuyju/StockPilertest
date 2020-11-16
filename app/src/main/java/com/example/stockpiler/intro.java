@@ -1,5 +1,4 @@
-package com.
-        example.stockpiler;
+package com.example.stockpiler;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -8,6 +7,7 @@ import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.os.Handler;
+import android.widget.Toast;
 
 
 public class intro extends AppCompatActivity {
@@ -24,7 +24,9 @@ public class intro extends AppCompatActivity {
         try {
             db.execSQL("INSERT INTO user VALUES('admin','admin');");
         }
-        catch (Exception e){}
+        catch (Exception e){
+             Toast.makeText(intro.this,e.toString(),Toast.LENGTH_LONG).show();
+        }
 
 
 
