@@ -241,13 +241,13 @@ public class purchase extends AppCompatActivity {
         clear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((AutoCompleteTextView) findViewById(R.id.slugid)).setText("");
                 ((EditText) findViewById(R.id.itemName)).setText("");
                 ((AutoCompleteTextView) findViewById(R.id.category)).setText("");
                 ((EditText) findViewById(R.id.description)).setText("");
                 ((EditText) findViewById(R.id.quantity)).setText("");
                 ((EditText) findViewById(R.id.costprice)).setText("");
                 ((EditText) findViewById(R.id.sellingprice)).setText("");
+                ((AutoCompleteTextView) findViewById(R.id.slugid)).setText("");
                 Toast.makeText(purchase.this, "Cleared", Toast.LENGTH_SHORT).show();
             }
         });
@@ -256,13 +256,13 @@ public class purchase extends AppCompatActivity {
 
     // Clear code
     public void clear() {
-        ((AutoCompleteTextView) findViewById(R.id.slugid)).setText("");
         ((EditText) findViewById(R.id.itemName)).setText("");
         ((AutoCompleteTextView) findViewById(R.id.category)).setText("");
         ((EditText) findViewById(R.id.description)).setText("");
         ((EditText) findViewById(R.id.quantity)).setText("");
         ((EditText) findViewById(R.id.costprice)).setText("");
         ((EditText) findViewById(R.id.sellingprice)).setText("");
+        ((AutoCompleteTextView) findViewById(R.id.slugid)).setText("");
     }
 
 
