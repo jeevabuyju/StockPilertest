@@ -26,7 +26,6 @@
     <string name="subqty">-</string>
 
     <string-array name="categories">
-        <item>--select category--</item>
         <item>Fruit &amp; Vegetables</item>
         <item>Grains &amp; Pulses</item>
         <item>Spices &amp; Condiments</item>

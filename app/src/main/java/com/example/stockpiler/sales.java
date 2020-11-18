@@ -11,10 +11,14 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.util.Arrays;
 
 
 public class sales extends AppCompatActivity {
@@ -25,7 +29,7 @@ public class sales extends AppCompatActivity {
         setContentView(R.layout.activity_sales);
 
         // initialize viewById
-        final EditText id = findViewById(R.id.id);
+        final AutoCompleteTextView id = findViewById(R.id.id);
         final TextView itemname = findViewById(R.id.itemName);
         final EditText quantity = findViewById(R.id.quantity);
         final TextView sellingprice = findViewById(R.id.sellingprice);
@@ -68,6 +72,43 @@ public class sales extends AppCompatActivity {
                 }
                 catch (Exception e){
                     Toast.makeText(sales.this,e.toString(),Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+
+
+        try {
+            String[] ids;
+            final SQLiteDatabase db = openOrCreateDatabase("stockpilerDB", Context.MODE_PRIVATE, null);
+            // check item in DB, if true UPDATE else INSERT
+            Cursor c = db.rawQuery("SELECT id FROM inventory ;", null);
+            ids = new String[c.getCount()];
+            int i = 0;
+            while (c.moveToNext()) {
+                ids[i] = c.getString(0);
+                Log.i("dbinfo", ids[i]);
+                int position = c.getPosition();
+                if (c.moveToNext()) {
+                    i++;
+                    c.moveToPosition(position);
+                }
+            }
+            c.close();
+            Log.i("dbinfo", Arrays.toString(ids));
+            // Id adapter
+            final ArrayAdapter<String> idadapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, ids);
+            id.setAdapter(idadapter);
+        } catch (Exception e) {
+            Toast.makeText(sales.this, e.toString(), Toast.LENGTH_LONG).show();
+        }
+
+        id.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(findViewById(R.id.details).getVisibility()==View.VISIBLE){
+                    clear();
+                }else {
+                    id.setText("");
                 }
             }
         });
@@ -236,7 +277,7 @@ public class sales extends AppCompatActivity {
         ((EditText) findViewById(R.id.quantity)).setText("");
         ((TextView) findViewById(R.id.sellingprice)).setText("");
         findViewById(R.id.details).setVisibility(View.INVISIBLE);
-        ((EditText) findViewById(R.id.id)).setText("");
+        ((AutoCompleteTextView) findViewById(R.id.id)).setText("");
     }
 
 
