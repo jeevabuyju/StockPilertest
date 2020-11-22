@@ -37,5 +37,6 @@
         <item>Others</item>
     </string-array>
     <string name="total">TOTAL</string>
+    <string name="remove">REMOVE</string>
 
 </resources>

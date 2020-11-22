@@ -19,27 +19,26 @@ public class intro extends AppCompatActivity {
         setContentView(R.layout.activity_intro);
 
         // create DB and table
-        final SQLiteDatabase db = openOrCreateDatabase("stockpilerDB", Context.MODE_PRIVATE,null);
+        final SQLiteDatabase db = openOrCreateDatabase("stockpilerDB", Context.MODE_PRIVATE, null);
+        db.execSQL("DROP TABLE cart;");
         db.execSQL("CREATE TABLE IF NOT EXISTS user(username VARCHAR UNIQUE,password VARCHAR);");
         db.execSQL("CREATE TABLE IF NOT EXISTS inventory(id VARCHAR UNIQUE NOT NULL PRIMARY KEY, itemname VARCHAR NOT NULL, category VARCHAR , description VARCHAR, quantity INTEGER, costprice DECIMAL(6,2) NOT NULL, sellingprice DECIMAL(6,2) NOT NULL);");
         db.execSQL("CREATE TABLE IF NOT EXISTS cart(id VARCHAR, itemname VARCHAR NOT NULL, quantity INTEGER NOT NULL, sellingprice DECIMAL(6,2) NOT NULL, totalamt DECIMAL(6,2) NOT NULL);");
         try {
             db.execSQL("INSERT INTO user VALUES('admin','admin');");
+        } catch (SQLiteConstraintException ignored) {
+        } catch (Exception e) {
+            Toast.makeText(intro.this, e.toString(), Toast.LENGTH_LONG).show();
         }
-        catch (SQLiteConstraintException ignored){}
-        catch (Exception e){
-             Toast.makeText(intro.this,e.toString(),Toast.LENGTH_LONG).show();
-        }
 
 
-
-        final Intent intent=new Intent(this,login.class);
+        final Intent intent = new Intent(this, login.class);
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
                 startActivity(intent);
             }
-        },1500);
+        }, 1500);
 
     }
 

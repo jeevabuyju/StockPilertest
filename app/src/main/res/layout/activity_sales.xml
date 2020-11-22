@@ -161,5 +161,18 @@
             app:layout_constraintTop_toBottomOf="@+id/totalamt" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+    <ImageView
+        android:id="@+id/cart"
+        android:layout_width="28dp"
+        android:layout_height="38dp"
+        android:layout_marginTop="24dp"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.692"
+        app:layout_constraintStart_toEndOf="@+id/imageView3"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_cart"
+        tools:ignore="ContentDescription,VectorDrawableCompat" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

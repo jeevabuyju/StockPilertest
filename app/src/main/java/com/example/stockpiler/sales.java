@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -15,9 +16,11 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+// import java.lang.reflect.Array;
 import java.util.Arrays;
 
 
@@ -38,6 +41,10 @@ public class sales extends AppCompatActivity {
         final Button qtysub = findViewById(R.id.qtysub);
         final Button addbtn = findViewById(R.id.add);
         final Button clear = findViewById(R.id.clear);
+        final ImageView cart = findViewById(R.id.cart);
+
+        // DB
+        final SQLiteDatabase db = openOrCreateDatabase("stockpilerDB", Context.MODE_PRIVATE, null);
 
 
         // id Listener
@@ -81,7 +88,6 @@ public class sales extends AppCompatActivity {
 
         try {
             String[] ids;
-            final SQLiteDatabase db = openOrCreateDatabase("stockpilerDB", Context.MODE_PRIVATE, null);
             // check item in DB, if true UPDATE else INSERT
             Cursor c = db.rawQuery("SELECT id FROM inventory ;", null);
             ids = new String[c.getCount()];
@@ -170,7 +176,6 @@ public class sales extends AppCompatActivity {
                 try {
 
                     // quantity check in db for productId
-                    final SQLiteDatabase db = openOrCreateDatabase("stockpilerDB", Context.MODE_PRIVATE, null);
                     Cursor c = db.rawQuery("SELECT * FROM inventory WHERE id='" + id.getText().toString().toUpperCase() + "';", null);
                     if (c.moveToFirst()) {
                         int qty = Integer.parseInt(c.getString(4));
@@ -209,7 +214,6 @@ public class sales extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 try {
-                    final SQLiteDatabase db = openOrCreateDatabase("stockpilerDB", Context.MODE_PRIVATE, null);
                     // validation
                     if (id.getText().toString().trim().length() == 0) {
                         Toast.makeText(sales.this, "ERROR, Please Enter the ProductId", Toast.LENGTH_SHORT).show();
@@ -228,6 +232,7 @@ public class sales extends AppCompatActivity {
                             db.execSQL("UPDATE inventory SET quantity ='" + newqty + "' WHERE id ='" + id.getText().toString().toUpperCase() + "';");
                             db.execSQL("INSERT INTO cart VALUES('" + id.getText().toString().toUpperCase() + "','" + itemname.getText() + "'," + quantity.getText() + "," + sellingprice.getText() + "," + totalamt.getText() + ");");
                             Toast.makeText(sales.this, "Product ADDED to Cart", Toast.LENGTH_SHORT).show();
+                            cart.setVisibility(View.VISIBLE);
                             clear();
                             c.close();
                         } else if (prevqty < Integer.parseInt(quantity.getText().toString()) && Integer.parseInt(quantity.getText().toString()) == 1) {
@@ -244,6 +249,25 @@ public class sales extends AppCompatActivity {
                 } catch (Exception e) {
                     Toast.makeText(sales.this, e.toString(), Toast.LENGTH_LONG).show();
                 }
+            }
+        });
+
+
+        // Cart Code
+        try {
+            Cursor c = db.rawQuery("SELECT * FROM cart ;", null);
+            if (c.moveToFirst()) {
+                cart.setVisibility(View.VISIBLE);
+            }
+            c.close();
+        } catch (Exception e) {
+            Toast.makeText(sales.this, e.toString(), Toast.LENGTH_LONG).show();
+        }
+        cart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Intent intent = new Intent(getApplicationContext(), cart.class);
+                startActivity(intent);
             }
         });
 
