@@ -20,7 +20,6 @@ public class intro extends AppCompatActivity {
 
         // create DB and table
         final SQLiteDatabase db = openOrCreateDatabase("stockpilerDB", Context.MODE_PRIVATE, null);
-        db.execSQL("DROP TABLE cart;");
         db.execSQL("CREATE TABLE IF NOT EXISTS user(username VARCHAR UNIQUE,password VARCHAR);");
         db.execSQL("CREATE TABLE IF NOT EXISTS inventory(id VARCHAR UNIQUE NOT NULL PRIMARY KEY, itemname VARCHAR NOT NULL, category VARCHAR , description VARCHAR, quantity INTEGER, costprice DECIMAL(6,2) NOT NULL, sellingprice DECIMAL(6,2) NOT NULL);");
         db.execSQL("CREATE TABLE IF NOT EXISTS cart(id VARCHAR, itemname VARCHAR NOT NULL, quantity INTEGER NOT NULL, sellingprice DECIMAL(6,2) NOT NULL, totalamt DECIMAL(6,2) NOT NULL);");

@@ -14,31 +14,35 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class cartAdapter extends RecyclerView.Adapter<cartAdapter.cartViewHolder> {
+import java.util.List;
 
-    String[] id;
-    Context context;
+public class cartAdapter extends RecyclerView.Adapter<cartAdapter.ViewHolder> {
+
     SQLiteDatabase db;
+    List<String> id;
+    Context ct;
 
-    public cartAdapter(Context ct, String[] ids, SQLiteDatabase dbs) {
-        context = ct;
-        id = ids;
-        db = dbs;
+    public cartAdapter(List<String> ids, SQLiteDatabase dbs, Context cts) {
+        this.id = ids;
+        this.db = dbs;
+        this.ct = cts;
     }
 
     @NonNull
     @Override
-    public cartViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        LayoutInflater inflater = LayoutInflater.from(context);
-        View view = inflater.inflate(R.layout.cartcard, parent, false);
-        return new cartViewHolder(view);
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
+        View view = layoutInflater.inflate(R.layout.cartcard, parent, false);
+        ViewHolder viewHolder;
+        viewHolder = new ViewHolder(view);
+        return viewHolder;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final cartViewHolder holder, final int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         // Check id in DB
         try {
-            Cursor c = db.rawQuery("SELECT * FROM cart WHERE id='" + id[position] + "';", null);
+            Cursor c = db.rawQuery("SELECT * FROM cart WHERE id='" + id.get(position) + "';", null);
             if (c.moveToFirst()) {
                 holder.itemname.setText(c.getString(0));
                 holder.qty.setText(c.getString(2));
@@ -49,64 +53,53 @@ public class cartAdapter extends RecyclerView.Adapter<cartAdapter.cartViewHolder
         } catch (Exception e) {
             Log.i("dbcheck", e.toString());
         }
-
-        // Cart qtyadd
-        holder.qtyadd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(v.getContext(), "qtyadd", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        // Cart qtysub
-        holder.qtysub.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(v.getContext(), "qtysub", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        // Cart remove
-        holder.remove.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                try {
-                    Cursor c = db.rawQuery("DELETE FROM cart WHERE id='" + id[position] + "';", null);
-                    if (c.moveToFirst()) {
-                        Toast.makeText(v.getContext(), "Item Removed from Cart", Toast.LENGTH_SHORT).show();
-                        c.close();
-                    }
-                } catch (Exception e) {
-                    Log.i("dbcheck", e.toString());
-                }
-                Toast.makeText(v.getContext(), "Item Removed from Cart", Toast.LENGTH_SHORT).show();
-            }
-        });
     }
 
     @Override
     public int getItemCount() {
-        return id.length;
+        return id.size();
     }
 
-    public static class cartViewHolder extends RecyclerView.ViewHolder {
+    class ViewHolder extends RecyclerView.ViewHolder {
 
         TextView itemname;
         TextView qty;
         TextView totalamt;
-        TextView remove;
+        TextView removebtn;
         Button qtyadd;
         Button qtysub;
 
-        public cartViewHolder(@NonNull View itemView) {
+        public ViewHolder(@NonNull View itemView) {
             super(itemView);
             itemname = itemView.findViewById(R.id.itemname);
             qty = itemView.findViewById(R.id.qty);
             totalamt = itemView.findViewById(R.id.totalamt);
-            remove = itemView.findViewById(R.id.remove);
+            removebtn = itemView.findViewById(R.id.removebtn);
             qtyadd = itemView.findViewById(R.id.qtyadd);
             qtysub = itemView.findViewById(R.id.qtysub);
 
+            removebtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    try {
+                        final String data = id.get(getAdapterPosition());
+                        final int datanotify = getAdapterPosition();
+                        Log.i("dbcheck", data + "," + datanotify);
+                        boolean c = db.delete("cart", "id='" + data + "'", null) > 0;
+                        if (c) {
+                            Toast.makeText(v.getContext(), data + " Removed from Cart", Toast.LENGTH_SHORT).show();
+                            id.remove(data);
+                            notifyItemRemoved(datanotify);
+                            if (ct instanceof cart) {
+                                ((cart) ct).emptycart(id.size());
+                            }
+                        }
+                    } catch (Exception e) {
+                        Log.i("dbcheck", e.toString());
+                    }
+                }
+            });
         }
+
     }
 }
