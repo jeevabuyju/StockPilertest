@@ -1,5 +1,6 @@
 package com.example.stockpiler;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -69,7 +70,20 @@ public class cartAdapter extends RecyclerView.Adapter<cartAdapter.ViewHolder> {
         Button qtyadd;
         Button qtysub;
 
-        public ViewHolder(@NonNull View itemView) {
+        public int tempqty(String data) {
+            Cursor crc = db.rawQuery("SELECT * FROM cart WHERE id='" + data + "';", null);
+            Cursor cri = db.rawQuery("SELECT * FROM inventory WHERE id='" + data + "';", null);
+            if (cri.moveToFirst() && crc.moveToFirst()) {
+                int temp = Integer.parseInt(cri.getString(4)) + Integer.parseInt(crc.getString(2));
+                cri.close();
+                crc.close();
+                return temp;
+            }
+            return 0;
+        }
+
+
+        public ViewHolder(@NonNull final View itemView) {
             super(itemView);
             itemname = itemView.findViewById(R.id.itemname);
             qty = itemView.findViewById(R.id.qty);
@@ -82,11 +96,16 @@ public class cartAdapter extends RecyclerView.Adapter<cartAdapter.ViewHolder> {
                 @Override
                 public void onClick(View v) {
                     try {
-                        final String data = id.get(getAdapterPosition());
+                        final String data;
+                        data = id.get(getAdapterPosition());
                         final int datanotify = getAdapterPosition();
-                        Log.i("dbcheck", data + "," + datanotify);
+                        ContentValues cvi = new ContentValues();
+                        cvi.put("quantity", tempqty(data));
+
+
+                        boolean ci = db.update("inventory", cvi, "id='" + data + "'", null) > 0;
                         boolean c = db.delete("cart", "id='" + data + "'", null) > 0;
-                        if (c) {
+                        if (c && ci) {
                             Toast.makeText(v.getContext(), data + " Removed from Cart", Toast.LENGTH_SHORT).show();
                             id.remove(data);
                             notifyItemRemoved(datanotify);
@@ -99,6 +118,97 @@ public class cartAdapter extends RecyclerView.Adapter<cartAdapter.ViewHolder> {
                     }
                 }
             });
+
+            // Add qty
+            qtyadd.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    try {
+                        final String data = id.get(getAdapterPosition());
+                        final int datanotify = getAdapterPosition();
+
+                        Cursor cri = db.rawQuery("SELECT * FROM inventory WHERE id='" + data + "';", null);
+                        Cursor crc = db.rawQuery("SELECT * FROM cart WHERE id='" + data + "';", null);
+                        if (cri.moveToFirst()) {
+                            if (crc.moveToFirst()) {
+                                int iqty = Integer.parseInt(cri.getString(4));
+                                if (iqty > 0) {
+                                    int newqty = Integer.parseInt(crc.getString(2)) + 1;
+                                    qty.setText(String.valueOf(newqty));
+                                    double newtotal = Double.parseDouble(crc.getString(3)) * newqty;
+                                    totalamt.setText(String.valueOf(newtotal));
+
+                                    ContentValues cvc = new ContentValues();
+                                    cvc.put("quantity", newqty);
+                                    cvc.put("totalamt", newtotal);
+
+                                    ContentValues cvi = new ContentValues();
+                                    cvi.put("quantity", iqty - 1);
+
+                                    boolean cc = db.update("cart", cvc, "id='" + data + "'", null) > 0;
+                                    boolean ci = db.update("inventory", cvi, "id='" + data + "'", null) > 0;
+                                    if (cc && ci) {
+                                        notifyItemChanged(datanotify);
+                                    }
+                                } else {
+                                    Toast.makeText(v.getContext(), "Out of Stock", Toast.LENGTH_SHORT).show();
+                                }
+                                crc.close();
+                            }
+                            cri.close();
+                        }
+                    } catch (Exception e) {
+                        Log.i("dbcheck", e.toString());
+                    }
+                }
+            });
+
+
+            // Sub qty
+            qtysub.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    try {
+                        final String data = id.get(getAdapterPosition());
+                        final int datanotify = getAdapterPosition();
+
+                        Cursor cri = db.rawQuery("SELECT * FROM inventory WHERE id='" + data + "';", null);
+                        Cursor crc = db.rawQuery("SELECT * FROM cart WHERE id='" + data + "';", null);
+                        if (cri.moveToFirst()) {
+                            if (crc.moveToFirst()) {
+                                int cqty = Integer.parseInt(crc.getString(2));
+                                int iqty = Integer.parseInt(cri.getString(4));
+                                if (cqty > 1) {
+                                    int newqty = Integer.parseInt(crc.getString(2)) - 1;
+                                    qty.setText(String.valueOf(newqty));
+                                    double newtotal = Double.parseDouble(crc.getString(3)) * newqty;
+                                    totalamt.setText(String.valueOf(newtotal));
+
+                                    ContentValues cvc = new ContentValues();
+                                    cvc.put("quantity", newqty);
+                                    cvc.put("totalamt", newtotal);
+
+                                    ContentValues cvi = new ContentValues();
+                                    cvi.put("quantity", iqty + 1);
+
+                                    boolean cc = db.update("cart", cvc, "id='" + data + "'", null) > 0;
+                                    boolean ci = db.update("inventory", cvi, "id='" + data + "'", null) > 0;
+                                    if (cc && ci) {
+                                        notifyItemChanged(datanotify);
+                                    }
+                                } else {
+                                    Toast.makeText(v.getContext(), "Minimum Quantity is 1", Toast.LENGTH_SHORT).show();
+                                }
+                                crc.close();
+                            }
+                            cri.close();
+                        }
+                    } catch (Exception e) {
+                        Log.i("dbcheck", e.toString());
+                    }
+                }
+            });
+
         }
 
     }

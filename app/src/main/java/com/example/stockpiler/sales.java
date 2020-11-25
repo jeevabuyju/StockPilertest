@@ -27,6 +27,13 @@ import java.util.Arrays;
 public class sales extends AppCompatActivity {
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        final ImageView cart = findViewById(R.id.cart);
+        cart.setVisibility(View.INVISIBLE);
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sales);
@@ -258,6 +265,8 @@ public class sales extends AppCompatActivity {
             Cursor c = db.rawQuery("SELECT * FROM cart ;", null);
             if (c.moveToFirst()) {
                 cart.setVisibility(View.VISIBLE);
+            } else {
+                cart.setVisibility(View.INVISIBLE);
             }
             c.close();
         } catch (Exception e) {

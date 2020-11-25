@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
-import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -54,8 +53,7 @@ public class cart extends AppCompatActivity {
     public void emptycart(int size) {
         if (size == 0) {
             Toast.makeText(cart.this, "Cart is Empty", Toast.LENGTH_LONG).show();
-            final Intent intent = new Intent(getApplicationContext(), sales.class);
-            startActivity(intent);
+            finish();
         }
     }
 }
