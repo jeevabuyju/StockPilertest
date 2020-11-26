@@ -30,7 +30,18 @@ public class sales extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         final ImageView cart = findViewById(R.id.cart);
-        cart.setVisibility(View.INVISIBLE);
+        final SQLiteDatabase db = openOrCreateDatabase("stockpilerDB", Context.MODE_PRIVATE, null);
+        try {
+            Cursor c = db.rawQuery("SELECT * FROM cart ;", null);
+            if (c.moveToFirst()) {
+                cart.setVisibility(View.VISIBLE);
+            } else {
+                cart.setVisibility(View.INVISIBLE);
+            }
+            c.close();
+        } catch (Exception e) {
+            Toast.makeText(sales.this, e.toString(), Toast.LENGTH_LONG).show();
+        }
     }
 
     @Override
@@ -231,8 +242,14 @@ public class sales extends AppCompatActivity {
                     }
 
                     // check item in DB, if true UPDATE else INSERT
+                    Cursor cr = db.rawQuery("SELECT * FROM cart WHERE id='" + id.getText().toString().toUpperCase() + "';", null);
                     Cursor c = db.rawQuery("SELECT * FROM inventory WHERE id='" + id.getText().toString().toUpperCase() + "';", null);
                     if (c.moveToFirst()) {
+                        if(cr.moveToFirst()){
+                            Toast.makeText(sales.this, id.getText().toString().toUpperCase()+" exists in Cart", Toast.LENGTH_SHORT).show();
+                            cr.close();
+                            return;
+                        }
                         int prevqty = Integer.parseInt(c.getString(4));
                         if (prevqty >= Integer.parseInt(quantity.getText().toString())) {
                             int newqty = prevqty - Integer.parseInt(quantity.getText().toString());

@@ -38,5 +38,6 @@
     </string-array>
     <string name="total">TOTAL</string>
     <string name="remove">REMOVE</string>
+    <string name="checkout">CHECKOUT</string>
 
 </resources>

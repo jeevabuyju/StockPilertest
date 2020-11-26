@@ -34,10 +34,10 @@ public class login extends AppCompatActivity {
                 // validation
                 if (username.getText().toString().trim().length() == 0) {
                     Toast.makeText(login.this, "Access Denied, Please Enter Username", Toast.LENGTH_SHORT).show();
-                    return;
+                    clear();
                 } else if (password.getText().toString().trim().length() == 0) {
                     Toast.makeText(login.this, "Access Denied, Please Enter Password", Toast.LENGTH_SHORT).show();
-                    return;
+                    clear();
                 } else {
 
                   // if check credentials

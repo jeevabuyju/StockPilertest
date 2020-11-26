@@ -23,6 +23,7 @@ public class intro extends AppCompatActivity {
         db.execSQL("CREATE TABLE IF NOT EXISTS user(username VARCHAR UNIQUE,password VARCHAR);");
         db.execSQL("CREATE TABLE IF NOT EXISTS inventory(id VARCHAR UNIQUE NOT NULL PRIMARY KEY, itemname VARCHAR NOT NULL, category VARCHAR , description VARCHAR, quantity INTEGER, costprice DECIMAL(6,2) NOT NULL, sellingprice DECIMAL(6,2) NOT NULL);");
         db.execSQL("CREATE TABLE IF NOT EXISTS cart(id VARCHAR, itemname VARCHAR NOT NULL, quantity INTEGER NOT NULL, sellingprice DECIMAL(6,2) NOT NULL, totalamt DECIMAL(6,2) NOT NULL);");
+        db.execSQL("CREATE TABLE IF NOT EXISTS sales(id VARCHAR NOT NULL, quantity INTEGER NOT NULL, costprice DECIMAL(6,2) NOT NULL, sellingprice DECIMAL(6,2) NOT NULL, totalamt DECIMAL(6,2) NOT NULL, profit DECIMAL(6,2));");
         try {
             db.execSQL("INSERT INTO user VALUES('admin','admin');");
         } catch (SQLiteConstraintException ignored) {

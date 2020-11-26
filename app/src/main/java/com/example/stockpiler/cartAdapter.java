@@ -110,6 +110,7 @@ public class cartAdapter extends RecyclerView.Adapter<cartAdapter.ViewHolder> {
                             id.remove(data);
                             notifyItemRemoved(datanotify);
                             if (ct instanceof cart) {
+                                ((cart)ct).total();
                                 ((cart) ct).emptycart(id.size());
                             }
                         }
@@ -149,6 +150,9 @@ public class cartAdapter extends RecyclerView.Adapter<cartAdapter.ViewHolder> {
                                     boolean ci = db.update("inventory", cvi, "id='" + data + "'", null) > 0;
                                     if (cc && ci) {
                                         notifyItemChanged(datanotify);
+                                        if (ct instanceof cart) {
+                                            ((cart) ct).total();
+                                        }
                                     }
                                 } else {
                                     Toast.makeText(v.getContext(), "Out of Stock", Toast.LENGTH_SHORT).show();
@@ -195,6 +199,9 @@ public class cartAdapter extends RecyclerView.Adapter<cartAdapter.ViewHolder> {
                                     boolean ci = db.update("inventory", cvi, "id='" + data + "'", null) > 0;
                                     if (cc && ci) {
                                         notifyItemChanged(datanotify);
+                                        if (ct instanceof cart) {
+                                            ((cart) ct).total();
+                                        }
                                     }
                                 } else {
                                     Toast.makeText(v.getContext(), "Minimum Quantity is 1", Toast.LENGTH_SHORT).show();
