@@ -1,10 +1,12 @@
 package com.example.stockpiler;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -26,6 +28,8 @@ public class cart extends AppCompatActivity {
     cartAdapter cartAdapter;
     TextView netamt;
     Button checkout;
+
+    AlertDialog.Builder builder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,52 +65,69 @@ public class cart extends AppCompatActivity {
         checkout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                try {
-                    String id;
-                    int qty;
-                    double cp, sp, totalamt, profit, cptot;
-                    // check item in DB, if true UPDATE else INSERT
-                    Cursor c = db.rawQuery("SELECT * FROM cart ;", null);
-                    boolean ins;
-                    while (c.moveToNext()) {
-                        id = c.getString(0);
-                        qty = Integer.parseInt(c.getString(2));
-                        sp = Double.parseDouble(c.getString(3));
-                        totalamt = Double.parseDouble(c.getString(4));
-                        cp = getcp(id);
-                        cptot = qty * cp;
-                        profit = totalamt - cptot;
 
-                        ContentValues cv = new ContentValues();
-                        cv.put("id", id);
-                        cv.put("quantity", qty);
-                        cv.put("costprice", cp);
-                        cv.put("sellingprice", sp);
-                        cv.put("totalamt", totalamt);
-                        cv.put("profit", profit);
+                builder = new AlertDialog.Builder(cart.this);
+                builder.setTitle("Confirmation");
+                builder.setMessage("Confirm SALES!!");
+                builder.setPositiveButton("CONFIRM", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
 
-                        ins = db.insert("sales", null, cv) >= 0;
+                        try {
+                            String id;
+                            int qty;
+                            double cp, sp, totalamt, profit, cptot;
+                            // check item in DB, if true UPDATE else INSERT
+                            Cursor c = db.rawQuery("SELECT * FROM cart ;", null);
+                            boolean ins;
+                            while (c.moveToNext()) {
+                                id = c.getString(0);
+                                qty = Integer.parseInt(c.getString(2));
+                                sp = Double.parseDouble(c.getString(3));
+                                totalamt = Double.parseDouble(c.getString(4));
+                                cp = getcp(id);
+                                cptot = qty * cp;
+                                profit = totalamt - cptot;
 
-                        int position = c.getPosition();
-                        if (c.moveToNext()) {
-                            c.moveToPosition(position);
-                        }
+                                ContentValues cv = new ContentValues();
+                                cv.put("id", id);
+                                cv.put("quantity", qty);
+                                cv.put("costprice", cp);
+                                cv.put("sellingprice", sp);
+                                cv.put("totalamt", totalamt);
+                                cv.put("profit", profit);
 
-                        if(!ins){
-                            throw new Exception("insert table error");
+                                ins = db.insert("sales", null, cv) >= 0;
+
+                                int position = c.getPosition();
+                                if (c.moveToNext()) {
+                                    c.moveToPosition(position);
+                                }
+
+                                if (!ins) {
+                                    throw new Exception("insert table error");
+                                }
+                            }
+                            boolean del = db.delete("cart", null, null) > 0;
+                            if (del) {
+                                Toast.makeText(cart.this, "SOLD!!", Toast.LENGTH_SHORT).show();
+                                // salescheck();
+                                finish();
+                            }
+                            c.close();
+
+                        } catch (Exception e) {
+                            Toast.makeText(cart.this, e.toString(), Toast.LENGTH_LONG).show();
                         }
                     }
-                    boolean del = db.delete("cart", null, null) > 0;
-                    if (del) {
-                        Toast.makeText(cart.this, "SOLD!!", Toast.LENGTH_SHORT).show();
-                       // salescheck();
-                        finish();
+                });
+                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
                     }
-                    c.close();
-
-                } catch (Exception e) {
-                    Toast.makeText(cart.this, e.toString(), Toast.LENGTH_LONG).show();
-                }
+                });
+                builder.show();
             }
         });
 
@@ -150,7 +171,7 @@ public class cart extends AppCompatActivity {
         final SQLiteDatabase db = openOrCreateDatabase("stockpilerDB", Context.MODE_PRIVATE, null);
         Cursor ci = db.rawQuery("SELECT costprice FROM inventory WHERE id ='" + id + "';", null);
         if (ci.moveToFirst()) {
-            rt= Double.parseDouble(ci.getString(0));
+            rt = Double.parseDouble(ci.getString(0));
             return rt;
         }
         ci.close();
