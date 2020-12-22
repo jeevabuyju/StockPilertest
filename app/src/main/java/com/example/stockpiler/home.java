@@ -37,7 +37,23 @@ public class home extends AppCompatActivity {
         sales.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final Intent intent=new Intent(getApplicationContext(),sales.class);
+                final Intent intent = new Intent(getApplicationContext(), sales.class);
+                startActivity(intent);
+            }
+        });
+
+        inventory.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Intent intent = new Intent(getApplicationContext(), inventory.class);
+                startActivity(intent);
+            }
+        });
+
+        alert.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Intent intent = new Intent(getApplicationContext(), alert.class);
                 startActivity(intent);
             }
         });
@@ -46,7 +62,7 @@ public class home extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Toast.makeText(home.this, "LOGGING OUT", Toast.LENGTH_SHORT).show();
-                final Intent intent=new Intent(getApplicationContext(),login.class);
+                final Intent intent = new Intent(getApplicationContext(), login.class);
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
