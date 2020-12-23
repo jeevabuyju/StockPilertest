@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
@@ -17,11 +18,11 @@ import java.util.List;
 public class inventoryAdapter extends RecyclerView.Adapter<inventoryAdapter.ViewHolder> {
 
     SQLiteDatabase db;
-    List<String> id;
+    static List<String> id;
     Context ct;
 
     public inventoryAdapter(List<String> ids, SQLiteDatabase dbs, Context cts) {
-        this.id = ids;
+        id = ids;
         this.db = dbs;
         this.ct = cts;
     }
@@ -58,12 +59,13 @@ public class inventoryAdapter extends RecyclerView.Adapter<inventoryAdapter.View
         return id.size();
     }
 
-    static class ViewHolder extends RecyclerView.ViewHolder {
+    class ViewHolder extends RecyclerView.ViewHolder {
 
         TextView category;
         TextView qty;
         TextView itemId;
         TextView price;
+        CardView card;
 
 
         public ViewHolder(@NonNull final View itemView) {
@@ -72,6 +74,23 @@ public class inventoryAdapter extends RecyclerView.Adapter<inventoryAdapter.View
             qty = itemView.findViewById(R.id.qty);
             itemId = itemView.findViewById(R.id.itemid);
             price = itemView.findViewById(R.id.sellingprice);
+            card = itemView.findViewById(R.id.card);
+
+            card.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    try {
+                        final String data;
+                        data = id.get(getAdapterPosition());
+                        if (ct instanceof inventory) {
+                            ((inventory) ct).selected(data);
+                        }
+                    } catch (Exception e) {
+                        Log.i("dbcheck", e.toString());
+                    }
+                }
+            });
+
         }
 
     }
