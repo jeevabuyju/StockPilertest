@@ -11,6 +11,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="AllowBackup">
+        <activity android:name=".report" />
         <activity android:name=".inventoryInfo" />
         <activity android:name=".inventory" />
         <activity android:name=".alert" />

@@ -39,5 +39,9 @@
     <string name="total">TOTAL</string>
     <string name="remove">REMOVE</string>
     <string name="checkout">CHECKOUT</string>
+    <string name="profit">PROFIT</string>
+    <string name="inventory_value">INVENTORY VALUE</string>
+    <string name="salesqty">SALES QTY</string>
+    <string name="inventoryqty">INVENTORY QTY</string>
 
 </resources>

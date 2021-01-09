@@ -12,7 +12,6 @@ import androidx.appcompat.app.AppCompatActivity;
 public class home extends AppCompatActivity {
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,7 +28,7 @@ public class home extends AppCompatActivity {
         purchase.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final Intent intent=new Intent(getApplicationContext(),purchase.class);
+                final Intent intent = new Intent(getApplicationContext(), purchase.class);
                 startActivity(intent);
             }
         });
@@ -58,6 +57,14 @@ public class home extends AppCompatActivity {
             }
         });
 
+        report.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Intent intent = new Intent(getApplicationContext(), report.class);
+                startActivity(intent);
+            }
+        });
+
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -68,7 +75,7 @@ public class home extends AppCompatActivity {
                     public void run() {
                         startActivity(intent);
                     }
-                },500);
+                }, 500);
             }
         });
     }
