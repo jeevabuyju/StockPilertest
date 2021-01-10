@@ -7,95 +7,338 @@
     android:background="@color/bgcolor"
     tools:context=".home">
 
-    <Button
-        android:id="@+id/purchase"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="#353535"
-        android:text="@string/purchase"
-        android:textColor="@color/colorAccent"
-        android:textStyle="bold"
-        app:layout_constraintBaseline_toBaselineOf="@+id/sales"
-        app:layout_constraintEnd_toStartOf="@+id/sales"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent" />
+    <androidx.cardview.widget.CardView
+        android:id="@+id/inventorycard"
+        android:layout_width="330dp"
+        android:layout_height="150dp"
+        android:layout_marginTop="30dp"
+        app:cardBackgroundColor="#2E2E2E"
+        app:cardCornerRadius="15dp"
+        app:cardElevation="10dp"
+        app:cardMaxElevation="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView3">
+
+        <TextView
+            android:id="@+id/inventory"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/inventoryname"
+                android:layout_width="100dp"
+                android:layout_height="18dp"
+                android:gravity="center"
+                android:text="@string/inventory"
+                android:textColor="#FFFFFF"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/inventoryicon" />
+
+            <ImageView
+                android:id="@+id/inventoryicon"
+                android:layout_width="98dp"
+                android:layout_height="85dp"
+                android:layout_marginTop="10dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.492"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_inventory"
+                tools:ignore="ContentDescription,VectorDrawableCompat" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/purchasecard"
+        android:layout_width="165dp"
+        android:layout_height="150dp"
+        android:layout_marginTop="20dp"
+        app:cardBackgroundColor="#2E2E2E"
+        app:cardCornerRadius="15dp"
+        app:cardElevation="10dp"
+        app:cardMaxElevation="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.105"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/inventorycard">
+
+        <TextView
+            android:id="@+id/purchase"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/purchasename"
+                android:layout_width="100dp"
+                android:layout_height="18dp"
+                android:gravity="center"
+                android:text="@string/purchase"
+                android:textColor="#FFFFFF"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/purchaseicon" />
+
+            <ImageView
+                android:id="@+id/purchaseicon"
+                android:layout_width="98dp"
+                android:layout_height="85dp"
+                android:layout_marginTop="10dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.492"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_purchase"
+                tools:ignore="ContentDescription,VectorDrawableCompat" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/salescard"
+        android:layout_width="165dp"
+        android:layout_height="150dp"
+        app:cardBackgroundColor="#2E2E2E"
+        app:cardCornerRadius="15dp"
+        app:cardElevation="10dp"
+        app:cardMaxElevation="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/purchasecard"
+        app:layout_constraintTop_toTopOf="@+id/purchasecard">
+
+        <TextView
+            android:id="@+id/sales"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/salesname"
+                android:layout_width="100dp"
+                android:layout_height="18dp"
+                android:gravity="center"
+                android:text="@string/sales"
+                android:textColor="#FFFFFF"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/salesicon" />
+
+            <ImageView
+                android:id="@+id/salesicon"
+                android:layout_width="98dp"
+                android:layout_height="85dp"
+                android:layout_marginTop="10dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.492"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_cart"
+                tools:ignore="ContentDescription,VectorDrawableCompat" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/reportcard"
+        android:layout_width="165dp"
+        android:layout_height="150dp"
+        app:cardBackgroundColor="#2E2E2E"
+        app:cardCornerRadius="15dp"
+        app:cardElevation="10dp"
+        app:cardMaxElevation="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/alertcard"
+        app:layout_constraintTop_toTopOf="@+id/alertcard">
+
+        <TextView
+            android:id="@+id/report"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/reportname"
+                android:layout_width="100dp"
+                android:layout_height="18dp"
+                android:gravity="center"
+                android:text="@string/report"
+                android:textColor="#FFFFFF"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/reporticon" />
+
+            <ImageView
+                android:id="@+id/reporticon"
+                android:layout_width="98dp"
+                android:layout_height="85dp"
+                android:layout_marginTop="10dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.492"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_report"
+                tools:ignore="ContentDescription,VectorDrawableCompat" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+
+    <!--    <Button-->
+    <!--        android:id="@+id/purchase"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:background="#353535"-->
+    <!--        android:text="@string/purchase"-->
+    <!--        android:textColor="@color/colorAccent"-->
+    <!--        android:textStyle="bold"-->
+    <!--        app:layout_constraintBaseline_toBaselineOf="@+id/sales"-->
+    <!--        app:layout_constraintEnd_toStartOf="@+id/sales"-->
+    <!--        app:layout_constraintHorizontal_bias="0.5"-->
+    <!--        app:layout_constraintStart_toStartOf="parent" />-->
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/alertcard"
+        android:layout_width="165dp"
+        android:layout_height="151dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginLeft="24dp"
+        android:layout_marginTop="20dp"
+        app:cardBackgroundColor="#2E2E2E"
+        app:cardCornerRadius="15dp"
+        app:cardElevation="10dp"
+        app:cardMaxElevation="10dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/purchasecard">
+
+        <TextView
+            android:id="@+id/alert"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/alertname"
+                android:layout_width="100dp"
+                android:layout_height="18dp"
+                android:gravity="center"
+                android:text="@string/alert"
+                android:textColor="#FFFFFF"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/alerticon" />
+
+            <ImageView
+                android:id="@+id/alerticon"
+                android:layout_width="98dp"
+                android:layout_height="85dp"
+                android:layout_marginTop="10dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.492"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_alert"
+                tools:ignore="ContentDescription,VectorDrawableCompat" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
 
     <ImageView
         android:id="@+id/imageView3"
         android:layout_width="250dp"
         android:layout_height="50dp"
         android:layout_marginTop="15dp"
+        android:contentDescription="@string/logo"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/logo"
-        android:contentDescription="@string/logo"
         tools:ignore="ContentDescription" />
 
-    <Button
-        android:id="@+id/sales"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
-        android:background="#353535"
-        android:text="@string/sales"
-        android:textColor="@color/colorAccent"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/purchase"
-        app:layout_constraintTop_toBottomOf="@+id/imageView3" />
+    <!--    <Button-->
+    <!--        android:id="@+id/sales"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_marginTop="460dp"-->
+    <!--        android:background="#353535"-->
+    <!--        android:text="@string/sales"-->
+    <!--        android:textColor="@color/colorAccent"-->
+    <!--        android:textStyle="bold"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"-->
+    <!--        app:layout_constraintHorizontal_bias="0.5"-->
+    <!--        app:layout_constraintStart_toEndOf="@+id/purchase"-->
+    <!--        app:layout_constraintTop_toBottomOf="@+id/imageView3" />-->
 
-    <Button
-        android:id="@+id/inventory"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:background="#353535"
-        android:text="@string/inventory"
-        android:textColor="@color/colorAccent"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/sales" />
+    <!--    <Button-->
+    <!--        android:id="@+id/inventory"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_marginTop="20dp"-->
+    <!--        android:background="#353535"-->
+    <!--        android:text="@string/inventory"-->
+    <!--        android:textColor="@color/colorAccent"-->
+    <!--        android:textStyle="bold"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        app:layout_constraintTop_toBottomOf="@+id/sales" />-->
 
-    <Button
-        android:id="@+id/report"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="#353535"
-        android:text="@string/report"
-        android:textColor="@color/colorAccent"
-        android:textStyle="bold"
-        app:layout_constraintBaseline_toBaselineOf="@+id/alert"
-        app:layout_constraintEnd_toStartOf="@+id/alert"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent" />
+    <!--    <Button-->
+    <!--        android:id="@+id/report"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:background="#353535"-->
+    <!--        android:text="@string/report"-->
+    <!--        android:textColor="@color/colorAccent"-->
+    <!--        android:textStyle="bold"-->
+    <!--        app:layout_constraintBaseline_toBaselineOf="@+id/alert"-->
+    <!--        app:layout_constraintEnd_toStartOf="@+id/alert"-->
+    <!--        app:layout_constraintHorizontal_bias="0.5"-->
+    <!--        app:layout_constraintStart_toStartOf="parent" />-->
 
-    <Button
-        android:id="@+id/alert"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:background="#353535"
-        android:text="@string/alert"
-        android:textColor="@color/colorAccent"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/report"
-        app:layout_constraintTop_toBottomOf="@+id/inventory" />
+    <!--    <Button-->
+    <!--        android:id="@+id/alert"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_marginTop="20dp"-->
+    <!--        android:background="#353535"-->
+    <!--        android:text="@string/alert"-->
+    <!--        android:textColor="@color/colorAccent"-->
+    <!--        android:textStyle="bold"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"-->
+    <!--        app:layout_constraintHorizontal_bias="0.5"-->
+    <!--        app:layout_constraintStart_toEndOf="@+id/report"-->
+    <!--        app:layout_constraintTop_toBottomOf="@+id/inventory" />-->
 
-    <Button
-        android:id="@+id/logout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
-        android:background="#353535"
-        android:text="@string/logout"
-        android:textColor="@color/colorAccent"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/report" />
 </androidx.constraintlayout.widget.ConstraintLayout>

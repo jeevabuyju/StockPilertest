@@ -6,11 +6,11 @@
     <string name="password">PASSWORD</string>
     <string name="username">USERNAME</string>
     <string name="home">Home</string>
-    <string name="report">Report</string>
-    <string name="alert">Alert</string>
-    <string name="inventory">Inventory</string>
-    <string name="purchase">Purchase</string>
-    <string name="sales">Sales</string>
+    <string name="report">REPORT</string>
+    <string name="alert">ALERT</string>
+    <string name="inventory">INVENTORY</string>
+    <string name="purchase">PURCHASE</string>
+    <string name="sales">SALES</string>
     <string name="logout">LOGOUT</string>
     <string name="logo">logo</string>
     <string name="description">DESCRIPTION</string>
