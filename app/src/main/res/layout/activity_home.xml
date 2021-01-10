@@ -210,19 +210,6 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 
-    <!--    <Button-->
-    <!--        android:id="@+id/purchase"-->
-    <!--        android:layout_width="wrap_content"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:background="#353535"-->
-    <!--        android:text="@string/purchase"-->
-    <!--        android:textColor="@color/colorAccent"-->
-    <!--        android:textStyle="bold"-->
-    <!--        app:layout_constraintBaseline_toBaselineOf="@+id/sales"-->
-    <!--        app:layout_constraintEnd_toStartOf="@+id/sales"-->
-    <!--        app:layout_constraintHorizontal_bias="0.5"-->
-    <!--        app:layout_constraintStart_toStartOf="parent" />-->
-
     <androidx.cardview.widget.CardView
         android:id="@+id/alertcard"
         android:layout_width="165dp"
@@ -286,59 +273,5 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/logo"
         tools:ignore="ContentDescription" />
-
-    <!--    <Button-->
-    <!--        android:id="@+id/sales"-->
-    <!--        android:layout_width="wrap_content"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:layout_marginTop="460dp"-->
-    <!--        android:background="#353535"-->
-    <!--        android:text="@string/sales"-->
-    <!--        android:textColor="@color/colorAccent"-->
-    <!--        android:textStyle="bold"-->
-    <!--        app:layout_constraintEnd_toEndOf="parent"-->
-    <!--        app:layout_constraintHorizontal_bias="0.5"-->
-    <!--        app:layout_constraintStart_toEndOf="@+id/purchase"-->
-    <!--        app:layout_constraintTop_toBottomOf="@+id/imageView3" />-->
-
-    <!--    <Button-->
-    <!--        android:id="@+id/inventory"-->
-    <!--        android:layout_width="wrap_content"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:layout_marginTop="20dp"-->
-    <!--        android:background="#353535"-->
-    <!--        android:text="@string/inventory"-->
-    <!--        android:textColor="@color/colorAccent"-->
-    <!--        android:textStyle="bold"-->
-    <!--        app:layout_constraintEnd_toEndOf="parent"-->
-    <!--        app:layout_constraintStart_toStartOf="parent"-->
-    <!--        app:layout_constraintTop_toBottomOf="@+id/sales" />-->
-
-    <!--    <Button-->
-    <!--        android:id="@+id/report"-->
-    <!--        android:layout_width="wrap_content"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:background="#353535"-->
-    <!--        android:text="@string/report"-->
-    <!--        android:textColor="@color/colorAccent"-->
-    <!--        android:textStyle="bold"-->
-    <!--        app:layout_constraintBaseline_toBaselineOf="@+id/alert"-->
-    <!--        app:layout_constraintEnd_toStartOf="@+id/alert"-->
-    <!--        app:layout_constraintHorizontal_bias="0.5"-->
-    <!--        app:layout_constraintStart_toStartOf="parent" />-->
-
-    <!--    <Button-->
-    <!--        android:id="@+id/alert"-->
-    <!--        android:layout_width="wrap_content"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:layout_marginTop="20dp"-->
-    <!--        android:background="#353535"-->
-    <!--        android:text="@string/alert"-->
-    <!--        android:textColor="@color/colorAccent"-->
-    <!--        android:textStyle="bold"-->
-    <!--        app:layout_constraintEnd_toEndOf="parent"-->
-    <!--        app:layout_constraintHorizontal_bias="0.5"-->
-    <!--        app:layout_constraintStart_toEndOf="@+id/report"-->
-    <!--        app:layout_constraintTop_toBottomOf="@+id/inventory" />-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>
