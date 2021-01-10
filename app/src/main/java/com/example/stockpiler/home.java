@@ -87,11 +87,12 @@ public class home extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         if (doubleBackToExitPressedOnce) {
-            finishAffinity();
+            final Intent intent = new Intent(getApplicationContext(), login.class);
+            startActivity(intent);
         }
 
         this.doubleBackToExitPressedOnce = true;
-        Toast.makeText(home.this, "Please click BACK again to Exit", Toast.LENGTH_SHORT).show();
+        Toast.makeText(home.this, "Please click BACK again to LOGOUT", Toast.LENGTH_SHORT).show();
 
         new Handler().postDelayed(new Runnable() {
 
